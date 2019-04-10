@@ -57,6 +57,18 @@ export function defaultAnimatedStyles (index, animatedValue, carouselProps) {
         };
     }
 
+    // TODO: Clean up - use better naming for props
+    if (carouselProps.inactiveSlideTextScale > 0) {
+        animatedScale = {
+            transform: [{
+                scale: animatedValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [carouselProps.inactiveSlideTextScale, 1]
+                })
+            }]
+        };
+    }
+
     return {
         ...animatedOpacity,
         ...animatedScale

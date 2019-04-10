@@ -1158,6 +1158,9 @@ export default class Carousel extends Component {
         const animate = this._shouldAnimateSlides();
         const Component = animate ? Animated.View : View;
         const animatedStyle = animate ? this._getSlideInterpolatedStyle(index, animatedValue) : {};
+        // TODO: Clean up - better naming of the props
+        // Invert the slide scale to keep the text at a fixed size
+        const animatedTextStyle = animate ? defaultAnimatedStyles(index, animatedValue, {...this.props, inactiveSlideTextScale: 1 / this.props.inactiveSlideScale * 0.6}) : {};
 
         const parallaxProps = hasParallaxImages ? {
             scrollPosition: this._scrollPos,
@@ -1176,7 +1179,7 @@ export default class Carousel extends Component {
 
         return (
             <Component style={[mainDimension, slideStyle, animatedStyle]} pointerEvents={'box-none'} {...specificProps}>
-                { renderItem({ item, index }, parallaxProps) }
+                { renderItem({ item, index}, parallaxProps, animatedTextStyle) }
             </Component>
         );
     }
